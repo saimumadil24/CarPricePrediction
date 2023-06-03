@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <title>Car Price Prediction</title>
+ <style>
+ body {
+ font-family: Arial, sans-serif;
+ text-align: center;
+ }
+ form {
+ display: inline-block;
+ text-align: left;
+ }
+ input[type="submit"] {
+ margin-top: 20px;
+ }
+ </style>
+ </head>
+ <body>
+ <h1>Car Price Prediction</h1>
+ <form action="/" method="POST">
+ <label for="mileage">Mileage:</label>
+ <input type="number" id="mileage" name="mileage"><br><br>
+ <label for="age">Age:</label>
+ <input type="number" id="age" name="age"><br><br>
+ <input type="radio" id="value_audi" name="car_make" value="audi">
+ <label for="value_audi">Audi</label><br><br>
+ <input type="radio" id="value_bmw" name="car_make" value="bmw">
+ <label for="value_bmw">BMW</label><br><br>
+ <input type="radio" id="value_mercedez" name="car_make" value="mercedez">
+ <label for="value_mercedez">Mercedez</label><br><br>
+ <input type="radio" id="value_toyota" name="car_make" value="toyota">
+ <label for="value_toyota">Toyota</label><br><br>
+ <input type="submit" value="Submit">
+ </form>
+
+ {% if output %}
+ <h2>Prediction Result: {{ output }}</h2>
+ {% endif %}
+<script>
+    // Get references to the form elements
+const form = document.querySelector('form');
+const mileageInput = document.querySelector('#mileage');
+const ageInput = document.querySelector('#age');
+const carMakeInputs = document.querySelectorAll('input[name="car_make"]');
+const submitButton = document.querySelector('input[type="submit"]');
+
+// Disable the submit button initially
+submitButton.disabled = true;
+
+// Function to check if all required fields are filled
+function checkFormCompletion() {
+  // Check if mileage and age inputs have values
+  const mileageFilled = mileageInput.value !== '';
+  const ageFilled = ageInput.value !== '';
+
+  // Check if a car make is selected
+  let carMakeSelected = false;
+  for (const input of carMakeInputs) {
+    if (input.checked) {
+      carMakeSelected = true;
+      break;
+    }
+  }
+
+  // Enable or disable the submit button based on form completion
+  submitButton.disabled = !(mileageFilled && ageFilled && carMakeSelected);
+}
+
+// Add event listeners to form elements to check for changes
+form.addEventListener('input', checkFormCompletion);
+</script> 
+</body>
+</html>
